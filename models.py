@@ -1,4 +1,5 @@
 import datetime
+import dateutil.parser
 
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -30,6 +31,11 @@ class Tweet(Base):
     timeline_id = Column(Integer, ForeignKey(Timeline.id))
     text = Column(String(length=200))
     date = Column(DateTime)
+
+    def __init__(self, tweet={}):
+        self.id = tweet['id']
+        self.text = tweet['text']
+        self.date = dateutil.parser.parse(tweet['created_at'])
 
     def __repr__(self):
         return '<Tweet({0}, {1}, {2})>'.format(self.timeline.screen_name,
