@@ -53,7 +53,8 @@ class Api:
         if req.ok and req.json['access_token'] == self.bearer_token:
             self.bearer_token = ''
 
-    def get_user_timeline(self, **kwargs):
-        req = self.make_request('1.1/statuses/user_timeline.json', kwargs)
+    def get_user_timeline(self, params={}, **kwargs):
+        params.update(kwargs)
+        req = self.make_request('1.1/statuses/user_timeline.json', params)
 
         return req.json if req.ok else []
