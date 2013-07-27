@@ -2,7 +2,7 @@ import datetime
 
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from sqlalchemy import Column, DateTime, ForeignKey, Integer, Interval, String
+from sqlalchemy import BigInteger, Column, DateTime, ForeignKey, Integer, Interval, String
 
 Base = declarative_base()
 
@@ -26,7 +26,7 @@ class Timeline(Base):
 class Tweet(Base):
     __tablename__ = 'Twiner_tweets'
 
-    id = Column(Integer, primary_key=True)
+    id = Column(BigInteger, primary_key=True)
     timeline_id = Column(Integer, ForeignKey(Timeline.id))
     text = Column(String(length=200))
     date = Column(DateTime)
