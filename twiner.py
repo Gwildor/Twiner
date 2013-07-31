@@ -13,6 +13,14 @@ def run():
     with io.open('conf.ini', 'rb') as fd:
         conf.readfp(fd)
 
+    params = {}
+    for key, val in conf.items('params'):
+        if key in ['trim_user', 'exclude_replies', 'contributor_details',
+                   'include_rts']:
+            params[key] = int(conf.getboolean('params', key))
+        else:
+            params[key] = val
+
     try:
         db_url = conf.get('database', 'url')
     except ConfigParser.NoOptionError:
@@ -35,9 +43,6 @@ def run():
 
     api = Api(conf.get('api', 'consumer_key'), conf.get('api',
                                                         'consumer_secret'))
-
-    params = {'count': 3, 'trim_user': 1, 'exclude_replies': 1,
-              'include_rts': 0}
 
     for tl in session.query(models.Timeline):
 
