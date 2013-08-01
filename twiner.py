@@ -8,9 +8,9 @@ from api import Api
 import models
 
 
-def run():
+def run(path_to_conf='conf.ini'):
     conf = ConfigParser.SafeConfigParser()
-    with io.open('conf.ini', 'rb') as fd:
+    with io.open(path_to_conf, 'rb') as fd:
         conf.readfp(fd)
 
     params = {}
