@@ -8,7 +8,7 @@ from api import Api
 import models
 
 
-def run(path_to_conf='conf.ini'):
+def run(path_to_conf='conf.ini', **kwargs):
     conf = ConfigParser.SafeConfigParser()
     with io.open(path_to_conf, 'rb') as fd:
         conf.readfp(fd)
@@ -20,6 +20,7 @@ def run(path_to_conf='conf.ini'):
             params[key] = int(conf.getboolean('params', key))
         else:
             params[key] = val
+    params.update(kwargs)
 
     try:
         db_url = conf.get('database', 'url')
