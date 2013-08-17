@@ -3,6 +3,7 @@ import ConfigParser
 import io
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+import sys
 
 from api import Api
 import models
@@ -66,4 +67,7 @@ def run(path_to_conf='conf.ini', **kwargs):
     session.commit()
 
 if __name__ == '__main__':
-    run()
+    if len(sys.argv) == 1:
+        run()
+    else:
+        run(sys.argv[1])
