@@ -38,8 +38,11 @@ class Api:
                             data={'grant_type': 'client_credentials'},
                             headers=headers)
 
-        if req.ok and req.json['token_type'] == 'bearer':
-            self.bearer_token = req.json['access_token']
+        if req:
+            res = req.json()
+
+            if res['token_type'] == 'bearer':
+                self.bearer_token = res['access_token']
 
     def invalidate_bearer_token(self):
         headers = {
@@ -50,11 +53,14 @@ class Api:
                             data={'access_token': self.bearer_token},
                             headers=headers)
 
-        if req.ok and req.json['access_token'] == self.bearer_token:
-            self.bearer_token = ''
+        if req:
+            res = req.json()
+
+            if res['access_token'] == self.bearer_token:
+                self.bearer_token = ''
 
     def get_user_timeline(self, params={}, **kwargs):
         params.update(kwargs)
         req = self.make_request('1.1/statuses/user_timeline.json', params)
 
-        return req.json if req.ok else []
+        return req.json() if req else []
