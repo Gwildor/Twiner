@@ -34,7 +34,7 @@ class Tweet(Base):
 
     def __init__(self, tweet={}):
         self.id = tweet['id']
-        self.text = tweet['text']
+        self.text = tweet['text'].encode('utf8')
         self.date = dateutil.parser.parse(tweet['created_at'])
 
     def __repr__(self):
