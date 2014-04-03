@@ -1,9 +1,10 @@
-import datetime
 import ConfigParser
+import datetime
 import io
+import sys
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-import sys
 
 from api import Api
 import models
@@ -48,7 +49,8 @@ def run(path_to_conf='conf.ini', **kwargs):
 
     for tl in session.query(models.Timeline):
 
-        if not tl.last_update or datetime.datetime.now() >= tl.last_update + tl.interval:
+        if not tl.last_update or datetime.datetime.now() >= \
+                tl.last_update + tl.interval:
 
             last_tweet = tl.tweets.order_by(models.Tweet.id.desc()).first()
             if last_tweet:

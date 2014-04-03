@@ -1,9 +1,10 @@
 import datetime
-import dateutil.parser
 
+import dateutil.parser
+from sqlalchemy import BigInteger, Column, DateTime, ForeignKey, Integer, \
+    Interval, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from sqlalchemy import BigInteger, Column, DateTime, ForeignKey, Integer, Interval, String
 
 Base = declarative_base()
 
@@ -19,9 +20,8 @@ class Timeline(Base):
     tweets = relationship('Tweet', backref='timeline', lazy='dynamic')
 
     def __repr__(self):
-        return '<Timeline({0}, {1}, {2})>'.format(self.screen_name,
-                                                  self.interval,
-                                                  self.last_update)
+        return '<Timeline({0}, {1}, {2})>'.format(
+            self.screen_name, self.interval, self.last_update)
 
 
 class Tweet(Base):
